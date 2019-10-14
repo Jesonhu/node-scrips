@@ -133,7 +133,7 @@ const run = () => {
   defaultRes = fs.readFileSync(defaultResFilePath, { encoding: 'utf8' })
   defaultRes = JSON.parse(defaultRes);
   let newRes = defaultRes;
-  newRes['resources'] = keyTransform(defaultRes.resources, { url: 'src' })
+  newRes['resources'] = keyTransform(defaultRes.resources, { url: 'src', name: 'id' })
 
   // ================================================================================
   // 生成新资源配置文件
