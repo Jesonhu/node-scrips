@@ -4,6 +4,7 @@
   "description": "常用 node 脚本",
   "main": "index.js",
   "scripts": {
+    "docs": "docsify serve docs",
     "resource": "node bin/resources-config.js"
   },
   "author": "",

@@ -1,9 +1,3 @@
-# node 工具集
+# node 常用脚本.
 
-## 资源文件生成
-
-> egret RES 与 createjs proloadjs 配置文件关联
-
-```
-npm run resource
-```
+> 基于 node 做的处理脚本, `./bin` 目录下的每个文件代表一个处理脚本.
