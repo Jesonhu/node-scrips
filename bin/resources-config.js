@@ -32,7 +32,9 @@ let desResDirPath = dest_base_path;
 // 目录配置
 // ================================================================================
 const sourceAskName = '✨ ' + ' sourcePath';
-const destAskName = '✨ ' + ' destinationPath';
+const destAskName = '✨ ' + ' generatePath';
+const destAskFileName = '✨ ' + ' generateFileName';
+let generateFileName = 'resource.config.json';
 
 const ask1 = () => {
   return inquirer.prompt({
@@ -62,10 +64,45 @@ const ask2 = () => {
   });
 }
 
+const aks3 = () => {
+  return inquirer.prompt({
+    name: destAskFileName,
+    type: 'input',
+  })
+  .then(res => {
+    const inputFileName = res[destAskFileName];
+    if (inputFileName) { // 输入了文件名
+      const regex = /(.json|.js)/g;
+      const match = regex.exec(inputFileName)
+      if (Array.isArray(match)) {
+        const fileType = match[1];
+        if (fileType !== '.json') {
+          generateFileName = inputFileName.split(fileType)[0] + '.json';
+
+          // File type must be a .json
+          console.log();
+          logger.fatal('File Type Must Be A .json');
+        } else {
+          generateFileName = inputFileName;
+        }
+      } else {
+        generateFileName = inputFileName + '.json';
+      }
+      
+    } else { 
+      generateFileName = 'resource.config.json';
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
+
 async function runAsk() {
   try {
     await ask1()
     await ask2();
+    await aks3();
   
     run();
   } catch (err) {
@@ -108,8 +145,6 @@ const run = () => {
   const formatDefaultRes = (str) => {
     return str;
   }
-
-  const generateFileName = 'default.new-res.json';
 
   const existsFilePath = desResDirPath + '/' + generateFileName;
   // 删除已存在的文件.
